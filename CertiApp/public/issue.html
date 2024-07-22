@@ -1,0 +1,56 @@
+<!-- issue.html -->
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Issue Certificate</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body>
+    <form action="/issue" method="POST">
+        <div class="flex justify-end">
+            <a href="/" class="b"><input type="button" name="Issue" value="Home" class="font-serif mr-2 h-10"></a>
+            <a href="/issue.html" class="b"><input type="button" name="home" value="Issue Certificate"
+                    class="rounded-md text-white mr-4 bg-blue-500 border-none font-serif h-10"></a>
+        </div>
+        <h2 class="text-2xl text-left font-bold font-serif">Certificate Dapp</h2>
+
+        <div class="ml-10 mt-12 mr-10 max-w-lg">
+            <h2 class="text-2xl font-bold font-serif">Issue New Certificate</h2>
+            <div class="flex flex-col">
+                <label class="block text-black-700 text-base text-xl pt-4 font-bold mb-2 font-serif" for="select">Select Course*</label>
+                <select name="course" class="border-2 border-black h-10">
+                    <option value="Certified Blockchain Associate">Certified Blockchain Associate</option>
+                    <option value="Certified Ethereum Developer">Certified Ethereum Developer</option>
+                    <option value="Certified Hyperledger Fabric Developer">Certified Hyperledger Fabric Developer</option>
+                </select>
+            </div>
+            <div class="flex flex-col">
+                <label class="block text-black-700 text-base text-xl pt-4 font-bold mb-2 font-serif" for="select">Certificate Id*</label>
+                <input type="text" name="certId" placeholder="Certificate ID" class="border-2 border-black h-10">
+            </div>
+            <div class="flex flex-col">
+                <label class="block text-black-700 text-base text-xl pt-4 font-bold mb-2 font-serif" for="select">Candidate Name*</label>
+                <input type="text" name="candidateName" placeholder="Candidate Name" class="border-2 border-black h-10">
+            </div>
+            <div class="flex flex-col">
+                <label class="block text-black-700 text-base text-xl pt-4 font-bold mb-2 font-serif" for="select">Select Grade*</label>
+                <select name="grade" class="border-2 border-black h-10">
+                    <option value="A">A</option>
+                    <option value="B">B</option>
+                    <option value="C">C</option>
+                </select>
+            </div>
+            <div class="flex flex-col">
+                <label class="block text-black-700 text-base text-xl pt-4 font-bold mb-2 font-serif" for="select">Issue Date*</label>
+                <input type="date" name="issueDate" class="border-2 border-black h-10">
+            </div>
+            <div>
+                <input type="submit" name="issue certificate" value="Issue Certificate" class="bg-blue-500 hover:bg-blue-700 outline-none text-white font-bold py-2 px-4 mt-4 rounded focus:outline-none focus:shadow-outline mb-5">
+            </div>
+        </div>
+    </form>
+</body>
+
+</html>

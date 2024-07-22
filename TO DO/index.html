@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo List</title>
+    <style>
+        body {
+            background-color: #4492c5;
+            padding: 32px;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        form {
+            margin-bottom: 24px;
+        }
+
+        .form-group {
+            display: flex;
+            align-items: center;
+        }
+
+        .form-group input[type="text"] {
+            flex-grow: 1;
+            border: 2px solid #57626d;
+            padding: 8px;
+            margin-right: 8px;
+        }
+
+        .form-group button {
+            background-color: #82a2bb;
+            color: rgb(206, 223, 185);
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .form-group button:hover {
+            background-color: #3182ce;
+        }
+
+        ul {
+            list-style-type: disc;
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        button.delete-btn, button.edit-btn {
+            margin-left: 8px;
+            padding: 4px 8px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button.delete-btn {
+            background-color: #e53e3e;
+            color: white;
+        }
+
+        button.delete-btn:hover {
+            background-color: #ca6868;
+        }
+
+        button.edit-btn {
+            background-color: #5beec9;
+            color: white;
+        }
+
+        button.edit-btn:hover {
+            background-color: #1aad4b;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Todo List</h1>
+        <form id="todoForm">
+            <div class="form-group">
+                <input type="text" id="todoInput" placeholder="Enter a new todo" required>
+                <button type="submit">Add Todo</button>
+            </div>
+        </form>
+        <ul id="todoList"></ul>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const todoForm = document.getElementById('todoForm');
+            const todoInput = document.getElementById('todoInput');
+            const todoList = document.getElementById('todoList');
+
+            async function fetchTodos() {
+                const response = await fetch('/api/todos');
+                const todos = await response.json();
+                todoList.innerHTML = '';
+                todos.forEach(todo => {
+                    const li = document.createElement('li');
+                    li.textContent = todo.text;
+                    li.dataset.id = todo.id;
+
+                    const deleteBtn = document.createElement('button');
+                    deleteBtn.textContent = 'Delete';
+                    deleteBtn.className = 'delete-btn';
+                    deleteBtn.onclick = () => deleteTodo(todo.id);
+
+                    const editBtn = document.createElement('button');
+                    editBtn.textContent = 'Edit';
+                    editBtn.className = 'edit-btn';
+                    editBtn.onclick = () => editTodoPrompt(todo.id, todo.text);
+
+                    li.appendChild(editBtn);
+                    li.appendChild(deleteBtn);
+                    todoList.appendChild(li);
+                });
+            }
+
+            async function addTodo() {
+                const response = await fetch('/api/todos', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ text: todoInput.value }),
+                });
+                if (response.ok) {
+                    fetchTodos();
+                    todoInput.value = '';
+                }
+            }
+
+            async function deleteTodo(id) {
+                const response = await fetch(`/api/todos/${id}`, {
+                    method: 'DELETE',
+                });
+                if (response.ok) {
+                    fetchTodos();
+                }
+            }
+
+            async function editTodoPrompt(id, currentText) {
+                const newText = prompt('Edit your todo:', currentText);
+                if (newText) {
+                    const response = await fetch(`/api/todos/${id}`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ text: newText }),
+                    });
+                    if (response.ok) {
+                        fetchTodos();
+                    }
+                }
+            }
+
+            todoForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                addTodo();
+            });
+
+            fetchTodos();
+        });
+    </script>
+</body>
+
+</html>

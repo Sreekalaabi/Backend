@@ -1,0 +1,33 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Certificate Dapp</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body>
+    <form action="/search" method="POST">
+        <div class="flex justify-end">
+            <a href="/home" class="b"><input type="button" name="home" value="Home" class="rounded-md text-white mr-4 bg-blue-500 border-none font-serif h-10 px-4"></a>
+            <a href="/issue"><input type="button" name="issue" value="Issue Certificate" class="font-serif mr-2 h-10"></a>
+        </div>
+
+        <div>
+            <h1 class="pt-16 text-4xl text-center font-bold font-serif">Certificate Dapp</h1>
+            <img src="../images/photo.jpg" alt="" class="size-60 mx-auto mt-12 mb-10">
+        </div>
+        <!-- <div class="text-center">
+            <input type="text" name="certId" required placeholder="Enter Certificate Id to view" class="border-2 border-sky-400">
+            <input type="submit" value="Search" class="text-white bg-blue-500 w-20 size-10">
+        </div> -->
+        <form action="/search" method="GET" class="w-full max-w-md flex ">
+            
+                <input type="text" name="certId" placeholder="Enter Certificate Id to view" class="flex-grow rounded-l px-4 py-2 border border-gray-300 ml-[670px] font-serif">
+                <input type="submit" value="Search" class="bg-blue-500 text-white rounded-r px-4 py-2 font-serif"></input>
+            </form>
+    </form>
+</body>
+
+</html>
